@@ -128,6 +128,7 @@ namespace CommandLine.Tests.Unit
                 yield return new object[] { new Add_Verb(), "add" };
                 yield return new object[] { new Add_Verb { Patch = true, FileName = "mysource.cs" }, "add --patch mysource.cs" };
                 yield return new object[] { new Add_Verb { Force = true, FileName = "mysource.fs" }, "add --force mysource.fs" };
+                yield return new object[] { new Add_Verb { Force = true, FileName = "mysource.fs" }, "add --force mysource.fs" };
             }
         }
 

@@ -58,11 +58,17 @@ namespace CommandLine.Core
             bool autoVersion,
             IEnumerable<ErrorType> nonFatalErrors)
         {
-            return verbs.Any(a => nameComparer.Equals(a.Item1.Name, arguments.First()))
+            var verbName = arguments.First();
+            foreach (var v in verbs) {
+                if (v.Item1.Aliases != null && v.Item1.Aliases.Contains(verbName)) {
+                    verbName = v.Item1.Name;
+                }
+            }
+            return verbs.Any(a => nameComparer.Equals(a.Item1.Name, verbName))
                 ? InstanceBuilder.Build(
                     Maybe.Just<Func<object>>(
                         () =>
-                            verbs.Single(v => nameComparer.Equals(v.Item1.Name, arguments.First())).Item2.AutoDefault()),
+                            verbs.Single(v => nameComparer.Equals(v.Item1.Name, verbName)).Item2.AutoDefault()),
                     tokenizer,
                     arguments.Skip(1),
                     nameComparer,

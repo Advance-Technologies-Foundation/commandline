@@ -5,8 +5,7 @@ using System.Collections.Generic;
 namespace CommandLine.Tests.Fakes
 {
     [Verb("add", HelpText = "Add file contents to the index.")]
-    public class Add_Verb
-    {
+    public class Add_Verb {
         [Option('p', "patch", SetName = "mode-p",
             HelpText = "Interactively choose hunks of patch between the index and the work tree and add them to the index.")]
         public bool Patch { get; set; }
@@ -19,7 +18,7 @@ namespace CommandLine.Tests.Fakes
         public string FileName { get; set; }
     }
 
-    [Verb("commit", HelpText = "Record changes to the repository.")]
+    [Verb("commit", Aliases = new string[]{"cmt"} ,HelpText = "Record changes to the repository.")]
     public class Commit_Verb
     {
         [Option('p', "patch",

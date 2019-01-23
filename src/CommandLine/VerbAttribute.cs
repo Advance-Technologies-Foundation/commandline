@@ -34,6 +34,8 @@ namespace CommandLine
             get { return name; }
         }
 
+       public string[] Aliases { get; set; }
+
         /// <summary>
         /// Gets or sets a value indicating whether a command line verb is visible in the help text.
         /// </summary>

@@ -115,6 +115,23 @@ namespace CommandLine.Tests.Unit.Core
         }
 
         [Fact]
+        public void Parse_existing_verb_by_alias_returns_verb_instance() {
+            // Fixture setup
+            var expected = new Commit_Verb { Message = "dummy.bin" };
+
+            // Exercize system 
+            var result = InvokeChoose(
+                new[] { typeof(Add_Verb), typeof(Commit_Verb), typeof(Clone_Verb) },
+                new[] { "cmt", "--message", "dummy.bin" });
+
+            // Verify outcome
+            Assert.IsType<Commit_Verb>(((Parsed<object>)result).Value);
+            expected.Should().BeEquivalentTo(((Parsed<object>)result).Value);
+            // Teardown
+        }
+
+
+        [Fact]
         public void Parse_existing_verb_returns_verb_immutable_instance()
         {
             // Fixture setup
