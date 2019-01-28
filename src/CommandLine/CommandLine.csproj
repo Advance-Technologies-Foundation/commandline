@@ -17,7 +17,7 @@
     <Version Condition="'$(VersionSuffix)' == ''">2.4.0</Version>
     <Description Condition="'$(BuildTarget)' != 'fsharp'">Terse syntax C# command line parser for .NET.  For FSharp support see CommandLineParser.FSharp.  The Command Line Parser Library offers to CLR applications a clean and concise API for manipulating command line arguments and related tasks.</Description>
     <Description Condition="'$(BuildTarget)' == 'fsharp'">Terse syntax C# command line parser for .NET with F# support. The Command Line Parser Library offers to CLR applications a clean and concise API for manipulating command line arguments and related tasks.</Description>
-    <Copyright>Copyright (c) 20018 ATF</Copyright>
+    <Copyright>Copyright (c) 2018 ATF</Copyright>
     <PackageLicenseUrl>https://github.com/Advance-Technologies-Foundation/commandline/blob/master/License.md</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/Advance-Technologies-Foundation/commandline/</PackageProjectUrl>
     <PackageIconUrl></PackageIconUrl>
@@ -27,6 +27,13 @@
     <Company>ATF</Company>
     <Description>Provide tool for create command line interface for C# projects</Description>
     <RootNamespace>CommandLine</RootNamespace>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugType>none</DebugType>
+    <DebugSymbols>false</DebugSymbols>
   </PropertyGroup>
 
   <ItemGroup Condition="'$(BuildTarget)' != 'fsharp'">
