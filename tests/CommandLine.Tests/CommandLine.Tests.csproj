@@ -7,6 +7,8 @@
     <DefineConstants Condition="'$(BuildTarget)' != 'fsharp'">$(DefineConstants);SKIP_FSHARP</DefineConstants>
     <AssemblyOriginatorKeyFile>..\..\CommandLine.snk</AssemblyOriginatorKeyFile>
     <SignAssembly>true</SignAssembly>
+    <AssemblyName>CommandLine.Tests</AssemblyName>
+    <RootNamespace>CommandLine.Tests</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup Condition="'$(BuildTarget)' != 'fsharp'">
@@ -15,15 +17,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\CommandLine\CommandLine.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="FluentAssertions" Version="5.4.1" />
     <PackageReference Include="FsCheck" Version="2.11.0" />
     <PackageReference Include="FSharp.Core" Version="4.5.1" Condition="'$(BuildTarget)' == 'fsharp'" />
     <PackageReference Include="xunit" Version="2.4.0" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\CommandLine\CommandLine.csproj" />
   </ItemGroup>
 
 </Project>

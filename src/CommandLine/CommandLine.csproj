@@ -11,17 +11,22 @@
     <SignAssembly>true</SignAssembly>
     <PackageId Condition="'$(BuildTarget)' != 'fsharp'">CommandLineParser</PackageId>
     <PackageId Condition="'$(BuildTarget)' == 'fsharp'">CommandLineParser.FSharp</PackageId>
-    <Authors>gsscoder;nemec;ericnewton76</Authors>
+    <Authors>a.technologies.foundation@gmail.com</Authors>
     <Title>Command Line Parser Library</Title>
     <Version Condition="'$(VersionSuffix)' != ''">$(VersionSuffix)</Version>
     <Version Condition="'$(VersionSuffix)' == ''">2.4.0</Version>
     <Description Condition="'$(BuildTarget)' != 'fsharp'">Terse syntax C# command line parser for .NET.  For FSharp support see CommandLineParser.FSharp.  The Command Line Parser Library offers to CLR applications a clean and concise API for manipulating command line arguments and related tasks.</Description>
     <Description Condition="'$(BuildTarget)' == 'fsharp'">Terse syntax C# command line parser for .NET with F# support. The Command Line Parser Library offers to CLR applications a clean and concise API for manipulating command line arguments and related tasks.</Description>
-    <Copyright>Copyright (c) 2005 - 2018 Giacomo Stelluti Scala &amp; Contributors</Copyright>
-    <PackageLicenseUrl>https://raw.githubusercontent.com/gsscoder/commandline/master/doc/LICENSE</PackageLicenseUrl>
-    <PackageProjectUrl>https://github.com/gsscoder/commandline</PackageProjectUrl>
-    <PackageIconUrl>https://raw.githubusercontent.com/commandlineparser/commandline/master/art/CommandLine20.png</PackageIconUrl>
+    <Copyright>Copyright (c) 20018 ATF</Copyright>
+    <PackageLicenseUrl>https://github.com/Advance-Technologies-Foundation/commandline/blob/master/License.md</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/Advance-Technologies-Foundation/commandline/</PackageProjectUrl>
+    <PackageIconUrl></PackageIconUrl>
     <PackageTags>command line;commandline;argument;option;parser;parsing;library;syntax;shell</PackageTags>
+    <PackageId>CommandLineSDK</PackageId>
+    <Version>1.0.0</Version>
+    <Company>ATF</Company>
+    <Description>Provide tool for create command line interface for C# projects</Description>
+    <RootNamespace>CommandLine</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup Condition="'$(BuildTarget)' != 'fsharp'">
