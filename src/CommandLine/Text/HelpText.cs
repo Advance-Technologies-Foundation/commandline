@@ -629,8 +629,6 @@ namespace CommandLine.Text
             var specs = type.GetSpecifications(Specification.FromProperty);
             var optionSpecs = specs
                 .OfType<OptionSpecification>();
-            //if (autoHelp)
-            //    optionSpecs = optionSpecs.Concat(new[] { MakeHelpEntry() });
             if (autoVersion)
                 optionSpecs = optionSpecs.Concat(new[] { MakeVersionEntry() });
             var valueSpecs = specs
@@ -664,8 +662,6 @@ namespace CommandLine.Text
                                       verbTuple.Item1.HelpText,
                                       string.Empty,
                                       verbTuple.Item1.Hidden);
-            //if (autoHelp)
-            //    optionSpecs = optionSpecs.Concat(new[] { MakeHelpEntry() });
             if (autoVersion)
                 optionSpecs = optionSpecs.Concat(new[] { MakeVersionEntry() });
             return optionSpecs;
