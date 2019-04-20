@@ -6,7 +6,7 @@ namespace CommandLine.Core
 {
     enum TokenType { Name, Value }
 
-    abstract class Token
+    internal abstract class Token
     {
         private readonly TokenType tag;
         private readonly string text;

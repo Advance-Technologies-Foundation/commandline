@@ -136,6 +136,11 @@ namespace CommandLine
         }
 
         /// <summary>
+        /// Gets or sets a value indicating whether implicit option or verb 'help' should be supported.
+        /// </summary>
+        public bool ShowHeader { get; set; } = true;
+
+        /// <summary>
         /// Gets or sets a value indicating whether implicit option or verb 'version' should be supported.
         /// </summary>
         public bool AutoVersion

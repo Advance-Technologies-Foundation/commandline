@@ -155,6 +155,8 @@ namespace CommandLine.Text
             set { addDashesToOption = value; }
         }
 
+        public bool AddHeaderToHelp { get; set; }
+        
         /// <summary>
         /// Gets or sets a value indicating whether to add an additional line after the description of the specification.
         /// </summary>
@@ -244,10 +246,12 @@ namespace CommandLine.Text
             usageLines.Do(
                 lines => auto.AddPreOptionsLines(lines));
 
-            auto.AddPreOptionsLine("---------------------------------------------------------------------------------------");
-            auto.AddPreOptionsLine("  Name                       ShortName     Description");
-            auto.AddPreOptionsLine("---------------------------------------------------------------------------------------");
-
+            if (ShowHeader)
+            {
+                auto.AddPreOptionsLine("---------------------------------------------------------------------------------------");
+                auto.AddPreOptionsLine("  Name                       ShortName     Description");
+                auto.AddPreOptionsLine("---------------------------------------------------------------------------------------");
+            }
             if ((verbsIndex && parserResult.TypeInfo.Choices.Any())
                 || errors.Any(e => e.Tag == ErrorType.NoVerbSelectedError)) {
                 auto.AddDashesToOption = false;
@@ -269,7 +273,8 @@ namespace CommandLine.Text
         /// </returns>
         /// <remarks>This feature is meant to be invoked automatically by the parser, setting the HelpWriter property
         /// of <see cref="CommandLine.ParserSettings"/>.</remarks>
-        public static HelpText AutoBuild<T>(ParserResult<T> parserResult, int maxDisplayWidth = DefaultMaximumLength) {
+        public static HelpText AutoBuild<T>(ParserResult<T> parserResult, int maxDisplayWidth = DefaultMaximumLength, bool showHeader = true) {
+            ShowHeader = showHeader;
             if (parserResult.Tag != ParserResultType.NotParsed)
                 throw new ArgumentException("Excepting NotParsed<T> type.", "parserResult");
 
@@ -778,6 +783,8 @@ namespace CommandLine.Text
         int shortNamePadding {
             get { return addDashesToOption ? 9 : 10; }
         }
+
+        public static bool ShowHeader { get; private set; }
 
         private string GetSpacer(int expected, string word) {
             var formatedSpacesCount = expected - word.Length;
