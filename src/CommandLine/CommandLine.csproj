@@ -23,7 +23,7 @@
     <PackageIconUrl></PackageIconUrl>
     <PackageTags>command line;commandline;argument;option;parser;parsing;library;syntax;shell</PackageTags>
     <PackageId>CommandLineSDK</PackageId>
-    <Version>1.0.2</Version>
+    <Version>1.0.3</Version>
     <Company>ATF</Company>
     <Description>Provide tool for create command line interface for C# projects</Description>
     <RootNamespace>CommandLine</RootNamespace>

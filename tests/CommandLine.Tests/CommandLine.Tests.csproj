@@ -9,7 +9,7 @@
     <SignAssembly>false</SignAssembly>
     <AssemblyName>CommandLine.Tests</AssemblyName>
     <RootNamespace>CommandLine.Tests</RootNamespace>
-    <Version>1.0.2</Version>
+    <Version>1.0.3</Version>
     <DelaySign>false</DelaySign>
   </PropertyGroup>
 
