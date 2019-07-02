@@ -1481,7 +1481,7 @@ namespace CommandLine
             }
             return notParsedFunc(((NotParsed<object>)result).Errors);
         }
-        public static TResult MapResult<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, TResult>(this ParserResult<object> result,
+        public static TResult MapResult<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, TResult>(this ParserResult<object> result,
             Func<T1, TResult> parsedFunc1,
             Func<T2, TResult> parsedFunc2,
             Func<T3, TResult> parsedFunc3,

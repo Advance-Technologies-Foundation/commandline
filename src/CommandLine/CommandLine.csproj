@@ -23,12 +23,14 @@
     <PackageIconUrl></PackageIconUrl>
     <PackageTags>command line;commandline;argument;option;parser;parsing;library;syntax;shell</PackageTags>
     <PackageId>CommandLineSDK</PackageId>
-    <Version>1.0.3</Version>
+    <Version>1.0.4</Version>
     <Company>ATF</Company>
     <Description>Provide tool for create command line interface for C# projects</Description>
     <RootNamespace>CommandLine</RootNamespace>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <FileVersion>1.0.4.0</FileVersion>
+    <AssemblyVersion>1.0.4.0</AssemblyVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
