@@ -168,6 +168,8 @@ namespace CommandLine
             set { maximumDisplayWidth = value; }
         }
 
+        public string HelpDirectory { get; set; }
+
         internal StringComparer NameComparer
         {
             get

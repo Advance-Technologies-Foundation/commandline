@@ -195,11 +195,26 @@ namespace CommandLine
             return DisplayHelp(
                 parserResult,
                 settings.HelpWriter,
-                settings.MaximumDisplayWidth, settings.ShowHeader);
+                settings.MaximumDisplayWidth, settings.ShowHeader, settings.HelpDirectory);
         }
 
-        private static ParserResult<T> DisplayHelp<T>(ParserResult<T> parserResult, TextWriter helpWriter, int maxDisplayWidth, bool showHeader)
+        private static ParserResult<T> DisplayHelp<T>(ParserResult<T> parserResult, TextWriter helpWriter, int maxDisplayWidth, bool showHeader, string helpDirectory)
         {
+            var customAttributes = parserResult.TypeInfo.Current.CustomAttributes;
+            if (customAttributes.Count() > 0) {
+                var customAttribute = customAttributes.First();
+                if (customAttribute.ConstructorArguments.Count > 0) {
+                    if (customAttribute != null && customAttribute.ConstructorArguments.First() != null) {
+                        string name = customAttributes.First().ConstructorArguments.First().Value.ToString();
+                        string helpFilePath = Path.Combine(helpDirectory, $"{name}.txt");
+                        if (File.Exists(helpFilePath)) {
+                            var help = File.ReadAllText(helpFilePath);
+                            helpWriter.Write(help);
+                            return parserResult;
+                        }
+                    }
+                }
+            }
             parserResult.WithNotParsed(
                 errors =>
                     Maybe.Merge(errors.ToMaybe(), helpWriter.ToMaybe())
