@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using CommandLine.Core;
 using CommandLine.Text;
 using CSharpx;
@@ -206,7 +207,15 @@ namespace CommandLine
                 if (customAttribute.ConstructorArguments.Count > 0) {
                     if (customAttribute != null && customAttribute.ConstructorArguments.First() != null) {
                         string name = customAttributes.First().ConstructorArguments.First().Value.ToString();
-                        string helpFilePath = Path.Combine(helpDirectory, $"{name}.txt");
+                        string helpFileName = $"{name}.txt";
+                        var culture = Thread.CurrentThread.CurrentUICulture.TwoLetterISOLanguageName;
+                        string helpFilePath = Path.Combine(helpDirectory, culture, helpFileName);
+                        if (!File.Exists(helpFilePath)) {
+                            helpFilePath = Path.Combine(helpDirectory, "en", helpFileName);
+                        }
+                        if (!File.Exists(helpFilePath)) {
+                            helpFilePath = Path.Combine(helpDirectory, helpFileName);
+                        }
                         if (File.Exists(helpFilePath)) {
                             var help = File.ReadAllText(helpFilePath);
                             helpWriter.Write(help);
