@@ -201,6 +201,9 @@ namespace CommandLine
 
         private static ParserResult<T> DisplayHelp<T>(ParserResult<T> parserResult, TextWriter helpWriter, int maxDisplayWidth, bool showHeader, string helpDirectory)
         {
+            if (parserResult.Tag == ParserResultType.Parsed) {
+                return parserResult;
+            }
             var customAttributes = parserResult.TypeInfo.Current.CustomAttributes;
             var isNotParsed = parserResult is NotParsed<T>;
             string helpFileName = "null.txt";
