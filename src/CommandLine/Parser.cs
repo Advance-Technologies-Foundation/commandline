@@ -206,15 +206,7 @@ namespace CommandLine
             }
             var customAttributes = parserResult.TypeInfo.Current.CustomAttributes;
             var isNotParsed = parserResult is NotParsed<T>;
-            string helpFileName = "null.txt";
-            if (isNotParsed) {
-                var notParsed = parserResult as NotParsed<T>;
-                if (notParsed.Errors.Count() > 0) {
-                    if (notParsed.Errors.First() is HelpVerbRequestedError) {
-                        helpFileName = "help.txt";
-                    }
-                }
-            }
+            string helpFileName = "help.txt";
             if (customAttributes.Count() > 0) {
                 var customAttribute = customAttributes.First();
                 if (customAttribute.ConstructorArguments.Count > 0) {
