@@ -154,6 +154,8 @@ namespace CommandLine
             if (args == null) throw new ArgumentNullException("args");
             if (types == null) throw new ArgumentNullException("types");
             if (types.Length == 0) throw new ArgumentOutOfRangeException("types");
+            var helpAliases = new[] { "--help", "-help", "-h", "--h" };
+            bool userHelpRequest = args.Any(a => helpAliases.Contains(a.ToLower()));
 
             return MakeParserResult(
                 InstanceChooser.Choose(
@@ -166,7 +168,8 @@ namespace CommandLine
                     settings.AutoHelp,
                     settings.AutoVersion,
                     HandleUnknownArguments(settings.IgnoreUnknownArguments)),
-                settings);
+                    settings,
+                    userHelpRequest);
         }
 
         /// <summary>
@@ -191,15 +194,16 @@ namespace CommandLine
                     settings.EnableDashDash)(arguments, optionSpecs);
         }
 
-        private static ParserResult<T> MakeParserResult<T>(ParserResult<T> parserResult, ParserSettings settings)
+        private static ParserResult<T> MakeParserResult<T>(ParserResult<T> parserResult, ParserSettings settings, bool userHelpRequest = false)
         {
             return DisplayHelp(
                 parserResult,
                 settings.HelpWriter,
-                settings.MaximumDisplayWidth, settings.ShowHeader, settings.HelpDirectory);
+                settings.MaximumDisplayWidth, settings.ShowHeader, settings.HelpDirectory, userHelpRequest, settings.CustomHelpViewer);
         }
 
-        private static ParserResult<T> DisplayHelp<T>(ParserResult<T> parserResult, TextWriter helpWriter, int maxDisplayWidth, bool showHeader, string helpDirectory)
+        private static ParserResult<T> DisplayHelp<T>(ParserResult<T> parserResult, TextWriter helpWriter, int maxDisplayWidth,
+            bool showHeader, string helpDirectory, bool userHelpRequest = false, CustomHelpViewer customHelpViewer = null)
         {
             if (parserResult.Tag == ParserResultType.Parsed) {
                 return parserResult;
@@ -207,36 +211,44 @@ namespace CommandLine
             var customAttributes = parserResult.TypeInfo.Current.CustomAttributes;
             var isNotParsed = parserResult is NotParsed<T>;
             string helpFileName = "help.txt";
+            string commandName = string.Empty;
             if (customAttributes.Count() > 0) {
                 var customAttribute = customAttributes.First();
                 if (customAttribute.ConstructorArguments.Count > 0) {
                     if (customAttribute != null && customAttribute.ConstructorArguments.First() != null) {
-                        string name = customAttributes.First().ConstructorArguments.First().Value.ToString();
-                        helpFileName = $"{name}.txt";
+                        commandName = customAttributes.First().ConstructorArguments.First().Value.ToString();
+                        helpFileName = $"{commandName}.txt";
                         
                     }
                 }
             }
-            var culture = Thread.CurrentThread.CurrentUICulture.TwoLetterISOLanguageName;
-            string helpFilePath = Path.Combine(helpDirectory, culture, helpFileName);
-            if (!File.Exists(helpFilePath)) {
-                helpFilePath = Path.Combine(helpDirectory, "en", helpFileName);
-            }
-            if (!File.Exists(helpFilePath)) {
-                helpFilePath = Path.Combine(helpDirectory, helpFileName);
-            }
-            if (File.Exists(helpFilePath)) {
-                var help = File.ReadAllText(helpFilePath);
-                helpWriter.Write(help);
+            if (userHelpRequest) {
+                if (customHelpViewer != null && customHelpViewer.CheckHelp(commandName)) {
+                    customHelpViewer.ViewHelp(commandName);
+                } else {
+                    var culture = Thread.CurrentThread.CurrentUICulture.TwoLetterISOLanguageName;
+                    string helpFilePath = Path.Combine(helpDirectory, culture, helpFileName);
+                    if (!File.Exists(helpFilePath)) {
+                        helpFilePath = Path.Combine(helpDirectory, "en", helpFileName);
+                    }
+                    if (!File.Exists(helpFilePath)) {
+                        helpFilePath = Path.Combine(helpDirectory, helpFileName);
+                    }
+                    if (File.Exists(helpFilePath)) {
+                        helpWriter.WriteLine($"{helpFilePath}");
+                        var help = File.ReadAllText(helpFilePath);
+                        helpWriter.Write(help);
+                    }
+                }
+                return parserResult;
+            } else {
+                parserResult.WithNotParsed(
+                    errors =>
+                        Maybe.Merge(errors.ToMaybe(), helpWriter.ToMaybe())
+                            .Do((_, writer) => writer.Write(HelpText.AutoBuild(parserResult, maxDisplayWidth, showHeader)))
+                    );
                 return parserResult;
             }
-            parserResult.WithNotParsed(
-                errors =>
-                    Maybe.Merge(errors.ToMaybe(), helpWriter.ToMaybe())
-                        .Do((_, writer) => writer.Write(HelpText.AutoBuild(parserResult, maxDisplayWidth, showHeader)))
-                );
-
-            return parserResult;
         }
 
         private static IEnumerable<ErrorType> HandleUnknownArguments(bool ignoreUnknownArguments)

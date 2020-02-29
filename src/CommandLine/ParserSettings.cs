@@ -8,6 +8,12 @@ using CommandLine.Infrastructure;
 
 namespace CommandLine
 {
+    public interface CustomHelpViewer {
+        bool CheckHelp(string commandName);
+
+        void ViewHelp(string commandName);
+    }
+
     /// <summary>
     /// Provides settings for <see cref="CommandLine.Parser"/>. Once consumed cannot be reused.
     /// </summary>
@@ -108,6 +114,10 @@ namespace CommandLine
             get { return helpWriter; }
             set { PopsicleSetter.Set(Consumed, ref helpWriter, value); }
         }
+
+
+        public CustomHelpViewer CustomHelpViewer { get; set; }
+
 
         /// <summary>
         /// Gets or sets a value indicating whether the parser shall move on to the next argument and ignore the given argument if it

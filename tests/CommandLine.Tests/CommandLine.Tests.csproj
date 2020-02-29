@@ -9,8 +9,9 @@
     <SignAssembly>false</SignAssembly>
     <AssemblyName>CommandLine.Tests</AssemblyName>
     <RootNamespace>CommandLine.Tests</RootNamespace>
-    <Version>1.0.3</Version>
+    <Version>1.0.4</Version>
     <DelaySign>false</DelaySign>
+    <AssemblyVersion>1.0.4.0</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup Condition="'$(BuildTarget)' != 'fsharp'">

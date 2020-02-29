@@ -83,7 +83,7 @@ namespace CommandLine.Core
         private static HelpVerbRequestedError MakeHelpVerbRequestedError(
             IEnumerable<Tuple<Verb, Type>> verbs,
             string verb,
-            StringComparer nameComparer)
+            StringComparer nameComparer, bool userHelpRequest = false)
         {
             return verb.Length > 0
                 ? verbs.SingleOrDefault(v => nameComparer.Equals(v.Item1.Name, verb))

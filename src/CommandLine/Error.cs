@@ -417,41 +417,31 @@ namespace CommandLine
     /// </summary>
     public sealed class HelpVerbRequestedError : Error
     {
-        private readonly string verb;
-        private readonly Type type;
-        private readonly bool matched;
-
-        internal HelpVerbRequestedError(string verb, Type type, bool matched)
+        internal HelpVerbRequestedError(string verb, Type type, bool matched, bool userHelpRequest = false)
             : base(ErrorType.HelpVerbRequestedError, true)
         {
-            this.verb = verb;
-            this.type = type;
-            this.matched = matched;
+            this.Verb = verb;
+            this.Type = type;
+            this.Matched = matched;
+            this.UserHelpRequest = userHelpRequest;
         }
 
-        /// <summary>
-        /// Verb command string.
-        /// </summary>
-        public string Verb
-        {
-            get { return verb; }
-        }
+		/// <summary>
+		/// Verb command string.
+		/// </summary>
+		public string Verb { get; }
 
-        /// <summary>
-        /// <see cref="System.Type"/> of verb command.
-        /// </summary>
-        public Type Type
-        {
-            get { return type; }
-        }
+		/// <summary>
+		/// <see cref="System.Type"/> of verb command.
+		/// </summary>
+		public Type Type { get; }
 
-        /// <summary>
-        /// <value>true</value> if verb command is found; otherwise <value>false</value>.
-        /// </summary>
-        public bool Matched
-        {
-            get { return matched; }
-        }
+		/// <summary>
+		/// <value>true</value> if verb command is found; otherwise <value>false</value>.
+		/// </summary>
+		public bool Matched { get; }
+
+		public bool UserHelpRequest { get; }
     }
 
     /// <summary>
